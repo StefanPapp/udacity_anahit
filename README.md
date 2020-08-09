@@ -1,2 +1,2 @@
-# udacity_anahit
-Anahit is a virtual classroom MVP
+# udacity_capstone
+This is a Kubernetes based application for text recognition
