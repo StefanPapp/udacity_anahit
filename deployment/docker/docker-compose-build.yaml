@@ -1,0 +1,6 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context:  ../../text-analyzer
+    image: stefanpapp/text-analyzer

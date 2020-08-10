@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: backend-user
+  name: backend-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: backend-user
+  template:
+    metadata:
+      labels:
+        service: backend-user
+    spec:
+      containers:
+      - image: stefanpapp/udacity-restapi-user
+        name: backend-user
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        env:
+        - name: POSTGRESS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: POSTGRESS_PASSWORD
+        - name: POSTGRESS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: POSTGRESS_USERNAME
+        - name: URL
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: URL
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: JWT_SECRET
+        - name: POSTGRESS_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: POSTGRESS_DATABASE
+        - name: POSTGRESS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: aws-secret
+              key: POSTGRESS_HOST
+
+      restartPolicy: Always
