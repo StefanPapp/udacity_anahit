@@ -15,3 +15,21 @@ text = args.text
 print('Calling DetectSentiment')
 print(json.dumps(comprehend.detect_sentiment(Text=text, LanguageCode='en'), sort_keys=True, indent=4))
 print('End of DetectSentiment\n')
+
+# Create CloudWatchEvents client
+cloudwatch_events = boto3.client('events')
+
+# Put an event
+response = cloudwatch_events.put_events(
+    Entries=[
+        {
+            'Detail': json.dumps({'text': text }),
+            'DetailType': 'sentimentSubmitted',
+            'Resources': [
+                'RESOURCE_ARN',
+            ],
+            'Source': 'detect_sentiment'
+        }
+    ]
+)
+print(response['Entries'])

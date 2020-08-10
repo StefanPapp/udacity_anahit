@@ -1,1 +1,1 @@
-python detect_sentiment.sh --text $1
+python detect_sentiment.py --text $1
