@@ -2,3 +2,4 @@
 logs
 *.log
 .idea/
+set_env.sh
