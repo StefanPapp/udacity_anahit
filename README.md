@@ -1,2 +1,6 @@
 # udacity_capstone
-This is a Kubernetes based application for text recognition
+Udacity_Capstone is a text recognition that is containerised.
+
+The project is split into one parts:
+1. A Text Analyser
+

@@ -1,6 +1,11 @@
 version: "3"
 services:
-  reverseproxy:
+  sentiments-analyzer:
     build:
-      context:  ../../text-analyzer
-    image: stefanpapp/text-analyzer
+      context:  ../../sentiments-analyzer
+    image: stefanpapp/sentiments-analyzer
+
+  entity-detector:
+      build:
+        context:  ../../entity-detector
+      image: stefanpapp/entity-detector
