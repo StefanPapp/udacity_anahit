@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: text-analyzer
-  name: text-analyzer
+    service: sentiments-analyzer
+  name: sentiments-analyzer
 spec:
   replicas: 2
   selector:
     matchLabels:
-      service: text-analyzer
+      service: sentiments-analyzer
   template:
     metadata:
       labels:
-        service: text-analyzer
+        service: sentiments-analyzer
     spec:
       containers:
-      - image: stefanpapp/text-analyzer
-        name: text-analyzer
+      - image: stefanpapp/sentiments-analyzer
+        name: sentiments-analyzer
         imagePullPolicy: Always
         resources:
           requests:
