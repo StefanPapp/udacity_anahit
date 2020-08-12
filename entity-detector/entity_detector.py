@@ -11,9 +11,9 @@ comprehend = boto3.client(service_name='comprehend',
                           )
 
 while True:
-    for file in os.listdir(os.environ['LANDING_ZONE']):
+    for file in os.listdir(os.environ['LANDING_ZONE'].strip('\n')):
         if file.endswith("txt"):
-            abs_path = os.path.join(os.environ['LANDING_ZONE'], file)
+            abs_path = os.path.join(os.environ['LANDING_ZONE'].strip('\n'), file)
             file_handler = open(abs_path, "r+")
             text = file_handler.read()
             cloudwatch_events = boto3.client('events', region_name=os.environ['AWS_REGION'].strip('\n'),
