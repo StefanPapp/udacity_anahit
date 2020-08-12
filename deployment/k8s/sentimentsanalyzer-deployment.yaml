@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: sentiments-analyzer
-  name: sentiments-analyzer
+    service: sentiment-analyzer
+  name: sentiment-analyzer
 spec:
   replicas: 2
   selector:
     matchLabels:
-      service: sentiments-analyzer
+      service: sentiment-analyzer
   template:
     metadata:
       labels:
-        service: sentiments-analyzer
+        service: sentiment-analyzer
     spec:
       containers:
-      - image: stefanpapp/sentiments-analyzer
-        name: sentiments-analyzer
+      - image: stefanpapp/sentiment-analyzer
+        name: sentiment-analyzer
         imagePullPolicy: Always
         resources:
           requests:
@@ -25,6 +25,34 @@ spec:
           limits:
             memory: "1024Mi"
             cpu: "500m"
-        ports:
-        - containerPort: 8080
-      restartPolicy: Always
+        env:
+          - name: ARN
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: ARN
+          - name: AWS_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_ACCESS_KEY
+          - name: AWS_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_SECRET_KEY
+          - name: AWS_REGION
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: AWS_REGION
+          - name: LANDING_ZONE
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: LANDING_ZONE
+          - name: COMPLETE_ZONE
+            valueFrom:
+              secretKeyRef:
+                name: aws-secret
+                key: COMPLETE_ZONE

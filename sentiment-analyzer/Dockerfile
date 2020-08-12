@@ -9,4 +9,4 @@ COPY *.sh ./
 COPY *.py ./
 RUN pip install boto3 awscli
 
-# Bundle app source
+cmd python sentiment_analyzer.py

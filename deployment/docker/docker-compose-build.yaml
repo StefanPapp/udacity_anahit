@@ -1,9 +1,9 @@
 version: "3"
 services:
-  sentiments-analyzer:
+  sentiment-analyzer:
     build:
-      context:  ../../sentiments-analyzer
-    image: stefanpapp/sentiments-analyzer
+      context:  ../../sentiment-analyzer
+    image: stefanpapp/sentiment-analyzer
 
   entity-detector:
       build:
