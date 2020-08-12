@@ -9,6 +9,4 @@ COPY *.sh ./
 COPY *.py ./
 RUN pip install boto3 awscli
 
-# staying alive
-# CMD tail -f /dev/null
-
+cmd python sentiment_analyzer.py

@@ -8,3 +8,4 @@ WORKDIR /usr/src/app
 COPY *.sh ./
 COPY *.py ./
 RUN pip install boto3 awscli
+cmd python entity_detector.py

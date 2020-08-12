@@ -1,13 +1,8 @@
 import boto3
 import json
-import argparse
 import os
-
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--text', help='text', required=True)
-
-args = parser.parse_args()
-
+import shutil
+import time
 
 comprehend = boto3.client(service_name='comprehend',
                           region_name=os.environ['AWS_REGION'],
@@ -15,26 +10,36 @@ comprehend = boto3.client(service_name='comprehend',
                           aws_secret_access_key=os.environ['AWS_SECRET_KEY']
                           )
 
-text = args.text
+while True:
+    for file in os.listdir(os.environ['LANDING_ZONE']):
+        if file.endswith("txt"):
+            abs_path = os.path.join(os.environ['LANDING_ZONE'], file)
+            file_handler = open(abs_path, "r+")
+            text = file_handler.read()
+            cloudwatch_events = boto3.client('events')
+            response = cloudwatch_events.put_events(
+            Entries=[
+               {
+                 'Detail': json.dumps({'text': text }),
+                 'DetailType': 'entitySubmitted',
+                 'Resources': [
+                     'RESOURCE_ARN',
+                 ],
+                 'Source': 'entity_detector'
+               }
+             ]
+            )
+            print(response['Entries'])
+            result = json.dumps(comprehend.detect_entities(Text=text, LanguageCode='en'), sort_keys=True, indent=4)
+            client = boto3.client('sns', region_name=os.environ['AWS_REGION'],
+                                         aws_access_key_id=os.environ['AWS_ACCESS_KEY'],
+                                         aws_secret_access_key=os.environ['AWS_SECRET_KEY'])
 
-print('Calling DetectEntities')
-print(json.dumps(comprehend.detect_entities(Text=text, LanguageCode='en'), sort_keys=True, indent=4))
-print('End of DetectEntities\n')
-
-# Create CloudWatchEvents client
-cloudwatch_events = boto3.client('events')
-
-# Put an event
-response = cloudwatch_events.put_events(
-    Entries=[
-        {
-            'Detail': json.dumps({'text': text }),
-            'DetailType': 'entitySubmitted',
-            'Resources': [
-                'RESOURCE_ARN',
-            ],
-            'Source': 'detect_entity'
-        }
-    ]
-)
-print(response['Entries'])
+            response = client.publish(
+                TargetArn=os.environ['ARN'],
+                Message=json.dumps({'default': json.dumps(result)}),
+                Subject='entity recognition',
+                MessageStructure='json'
+            )
+            shutil.move(abs_path, os.path.join(os.environ['COMPLETE_ZONE'], file))
+            time.sleep(5)
