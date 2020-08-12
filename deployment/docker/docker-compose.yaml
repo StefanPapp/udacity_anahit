@@ -1,7 +1,14 @@
 version: "3"
 services:
   entity-detector:
-      image: stefanpapp/entity-detector:latest
+    image: stefanpapp/entity-detector:latest
+    environment:
+      AWS_REGION: $AWS_REGION
+      AWS_ACCESS_KEY: $AWS_ACCESS_KEY
+      AWS_SECRET_KET: $AWS_SECRET_KEY
   sentiments-analyzer:
     image: stefanpapp/sentiments-analyzer:latest
-
+    environment:
+      AWS_REGION: $AWS_REGION
+      AWS_ACCESS_KEY: $AWS_ACCESS_KEY
+      AWS_SECRET_KET: $AWS_SECRET_KEY

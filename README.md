@@ -11,6 +11,7 @@ At the moment, both use AWS comprehend to return values.
 ### Prerequisite
 Docker and Kubernetes are required.
 
+docker run --name sa stefanpapp/sentiments-analyzer ls
 
 ## Starting
 
