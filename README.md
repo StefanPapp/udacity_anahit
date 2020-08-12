@@ -5,7 +5,7 @@ The project is split into two parts:
 1. A Sentiments Analyser
 2. A Entity Detector
 
-At the moment, both use AWS comprehend to return values. 
+At the moment, both use AWS comprehend to return values.
 
 ## Getting Started
 ### Prerequisite
@@ -13,11 +13,15 @@ Docker and Kubernetes are required.
 
 docker run --name sa stefanpapp/sentiments-analyzer ls
 
-## Starting
+## Configuration
+* rename set_env_template.sh to set_env.sh
+* set the following values
 
+## Starting
+*
 
 ## Grading
-In the folder grading, there is the following 
+In the folder grading, there is the following
 
 ### CI/CD, Github & Code Quality
 * Screenshot Travis in directory
@@ -36,3 +40,6 @@ In the folder grading, there is the following
 
 ## Monitoring
 * Screenshot The application is monitored by Amazon CloudWatch
+
+# limitations
+* various IO exceptions are not implemented

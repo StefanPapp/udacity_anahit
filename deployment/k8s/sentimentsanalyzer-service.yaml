@@ -2,8 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    service: sentiments-analyzer
-  name: sentiments-analyzer
+    service: sentiment-analyzer
+  name: sentiment-analyzer
 spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
-    service: sentiments-analyzer
+    service: sentiment-analyzer

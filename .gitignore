@@ -2,4 +2,6 @@
 logs
 *.log
 .idea/
+set_env.shaws-secret.yaml
+aws-secret.yaml
 set_env.sh

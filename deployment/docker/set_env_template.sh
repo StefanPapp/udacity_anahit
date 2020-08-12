@@ -5,7 +5,7 @@ export AWS_ACCESS_KEY=your_access_key_here
 export AWS_SECRET_KEY=your_secret_key_here
 export LANDING_ZONE=/tmp/landing_zone
 export COMPLETE_ZONE=/tmp/complete_zone
-export ARN=	arn:aws:sns:us-east-1:098829378826:text_notif
+export ARN=here arn of sns topic
 
 docker volume create --driver local \
     --opt type=none \

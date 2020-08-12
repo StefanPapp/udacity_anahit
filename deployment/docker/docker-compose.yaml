@@ -5,7 +5,6 @@ volumes:
   complete_zone:
     external: true
 services:
-
   entity-detector:
     image: stefanpapp/entity-detector:latest
     environment:
@@ -14,13 +13,19 @@ services:
       AWS_SECRET_KEY: $AWS_SECRET_KEY
       LANDING_ZONE: $LANDING_ZONE
       COMPLETE_ZONE: $COMPLETE_ZONE
+      ARN: $ARN
     volumes:
-      - web_data:$LANDING_ZONE
+      - landing_zone:$LANDING_ZONE
+      - complete_zone:$COMPLETE_ZONE
   sentiments-analyzer:
-    image: stefanpapp/sentiments-analyzer:latest
+    image: stefanpapp/sentiment-analyzer:latest
     environment:
       AWS_REGION: $AWS_REGION
       AWS_ACCESS_KEY: $AWS_ACCESS_KEY
       AWS_SECRET_KEY: $AWS_SECRET_KEY
       LANDING_ZONE: $LANDING_ZONE
       COMPLETE_ZONE: $COMPLETE_ZONE
+      ARN: $ARN
+    volumes:
+      - landing_zone:$LANDING_ZONE
+      - complete_zone:$COMPLETE_ZONE
